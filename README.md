@@ -43,23 +43,3 @@ Boruta confirmed OSRS and PF as top predictors. DSRS, SoS, and team name were co
 ## Why this matters beyond football
 
 The workflow — ETL from raw XLS, feature engineering, multicollinearity diagnosis, iterative model refinement — translates directly to any domain where you're predicting a continuous outcome from correlated business metrics. The NFL context makes it readable; the methodology is what's transferable.
-
----
-
-## Files
-
-```
-├── data/
-│   ├── offensive_stats_2024.csv
-│   ├── defensive_stats_2024.csv
-│   └── preseason_2024.csv
-├── scripts/
-│   ├── 01_etl_merge.R
-│   ├── 02_boruta_selection.R
-│   ├── 03_regression_models.R
-│   └── 04_svr_analysis.R
-└── plots/
-    ├── boruta_importance.png
-    ├── correlation_heatmap.png
-    └── predicted_vs_actual.png
-```
