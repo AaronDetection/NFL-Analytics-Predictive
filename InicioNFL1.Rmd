@@ -1,0 +1,395 @@
+---
+title: "NFLCleanData1"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+date: "2025-05-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+library(readxl)
+library(readr)
+library(dplyr)
+library(Boruta)
+library(gdata)
+
+library(e1071)
+```
+
+
+
+```{r}
+NFL1 <- read_csv("DataNFLPointsOffense.csv")
+NFL1
+```
+
+
+```{r}
+NFL2 <- read_csv("DataNFLPointsOffense2.csv")
+NFL2
+```
+```{r}
+
+NFLpre <- read_csv("NFLpree.csv")
+NFLpre
+```
+
+
+
+```{r}
+NFL_combined <- rbind(NFL1[, names(NFL2)], NFL2)
+NFL3 <- NFL_combined[complete.cases(NFL_combined),]
+```
+
+```{r}
+NFL3$PPG <- round (NFL3$PF / 17, 1)
+```
+
+```{r}
+names(NFL3)
+```
+
+```{r}
+NFL3$Tm[NFL3$Tm == "Buffalo Bills*"] <- "Buffalo Bills"
+NFL3$Tm[NFL3$Tm == "Baltimore Ravens*"] <- "Baltimore Ravens"
+NFL3$Tm[NFL3$Tm == "Pittsburgh Steelers+"] <- "Pittsburgh Steelers"
+NFL3$Tm[NFL3$Tm == "Houston Texans*"] <- "Houston Texans"
+NFL3$Tm[NFL3$Tm == "Kansas City Chiefs*"] <- "Kansas City Chiefs"
+NFL3$Tm[NFL3$Tm == "Los Angeles Chargers+"] <- "Los Angeles Chargers"
+NFL3$Tm[NFL3$Tm == "Denver Broncos+"] <- "Denver Broncos"
+NFL3$Tm[NFL3$Tm == "Philadelphia Eagles*"] <- "Philadelphia Eagles"
+NFL3$Tm[NFL3$Tm == "Washington Commanders+"] <- "Washington Commanders"
+NFL3$Tm[NFL3$Tm == "Detroit Lions*"] <- "Detroit Lions"
+NFL3$Tm[NFL3$Tm == "Minnesota Vikings+"] <- "Minnesota Vikings"
+NFL3$Tm[NFL3$Tm == "Green Bay Packers+"] <- "Green Bay Packers"
+NFL3$Tm[NFL3$Tm == "Tampa Bay Buccaneers*"] <- "Tampa Bay Buccaneers"
+NFL3$Tm[NFL3$Tm == "Los Angeles Rams*"] <- "Los Angeles Rams"
+NFL3
+```
+
+```{r}
+# Unir ambas tablas por la columna Tm (equipos)
+NFLfinal <- merge(NFL3, NFLpre, by = "Tm", all.X = TRUE)
+
+# Verificar resultado
+# head(NFLfinal)
+
+NFLfinal <- NFL3 %>%
+  inner_join(NFLpre, by = "Tm", suffix = c("_2024", "_pre")) %>%
+  mutate(
+    # Juegos de temporada regular 2024
+    G_2024 = W_2024 + L_2024,   # viene de W y L de NFL3
+    
+    # Puntos totales sumando pretemporada
+    PF_total = PF_2024 + PF_pre,
+    
+    # Juegos totales (W+L de 2024 + asumimos 3 fijos en pretemporada) AÑADIMOS X JUEGOS HASTA       AHORA
+    G_total = G_2024 + 3,  
+    
+    # Nuevo promedio de puntos por partido
+    PPG_nuevo = PF_total / G_total
+  )
+
+NFLfinal
+```
+
+
+
+```{r}
+boruta_result <- Boruta(PPG ~ ., data = NFL3, doTrace = 2)
+print(boruta_result)
+plot(boruta_result)
+```
+```{r}
+boruta_result25 <- Boruta(PPG_nuevo ~ ., data = NFLfinal, doTrace = 2)
+print(boruta_result25)
+plot(boruta_result25)
+
+# 1. Resultados detallados de Boruta
+boruta_result25$finalDecision  
+
+# 2. Importancia numérica (se puede ordenar)
+importance <- attStats(boruta_result25)
+importance[order(-importance$meanImp), ]   # de mayor a menor importancia
+
+```
+
+
+
+```{r}
+
+modelo_lineal <- lm(PPG ~ MoV  + W + PA + SoS, data = NFL3)
+modelo_lineal
+```
+El modelo tiene valor a la hora de simular escenarios, puedes usar variables de los últimos partidos de 2024, para estimar el PPG de 2025 que todavía no haya salido, y puedes probar en colocar tu propio MoV estimado si el team se enfrenta a otro team débil.
+
+
+```{r}
+# ENTRENAMIENTO del modelo con todos los equipos
+modelo_lineal1 <- lm(PPG ~ MoV  + W + PA + SoS, data = NFL3)
+summary(modelo_lineal1)
+
+# PREDICCIÓN solo para Buffalo Bills VALORES FIJOS DE LA TABLA
+buffalo <- subset(NFL3, Tm == "Buffalo Bills*")
+predict(modelo_lineal1, newdata = buffalo)
+```
+```{r}
+# ENTRENAMIENTO del modelo con todos los equipos
+modelolin2 <- lm(PPG_nuevo ~ MoV  + OSRS + PD_2024 , data = NFLfinal)
+summary(modelolin2)
+modelolin2
+```
+
+
+
+PARA APLICAR LOS VALORES QUE TU DESEES &&&&&&&&&&&&&&&&&&&&&&7
+```{r}
+# Crear un nuevo data.frame con los valores personalizados
+buffalo_t <- data.frame(
+  MoV = 7,                      # Nuevo valor personalizado + variables a usar
+  W = NFL3$W[NFL3$Tm == "Buffalo Bills"],
+  PA = NFL3$PA[NFL3$Tm == "Buffalo Bills"],
+  SoS = NFL3$SoS[NFL3$Tm == "Buffalo Bills"]
+)
+
+# Predecir usando modelo lineal
+predict(modelo_lineal1, newdata = buffalo_t)
+
+```
+```{r}
+NFLfinal
+```
+
+```{r}
+# Asegúrate de que el modelo es este:
+modelob_nfl <- lm(PPG_nuevo ~ MoV + OSRS + L_2024, data = NFLfinal)
+modelob_nfl
+
+# Crear datos de prueba para Kansas City
+kc_t <- data.frame(
+  MoV = 2,  # valor que quieres probar (ej. 3.5 real → 7 hipotético)
+  OSRS = 0,
+  L_2024 = NFLfinal$L_2024[NFLfinal$Tm == "Houston Texans"]
+)
+
+# Predecir
+predict(modelob_nfl, newdata = kc_t)
+
+
+```
+
+```{r}
+# Crear datos de prueba para Kansas City
+bc_t <- data.frame(
+  MoV = 0.5,  
+  # valor que quieres probar (ej. 3.5 real → 7 hipotético)
+  OSRS = 1.5,
+  L_2024 = NFLfinal$L_2024[NFLfinal$Tm == "Los Angeles Rams"]
+)
+
+# Predecir
+predict(modelob_nfl, newdata = bc_t)
+
+```
+
+
+
+ENTRENAMIENTO DE MODELO KERNEL
+```{r}
+# SVR con kernel LINEAL
+svr_linear <- svm(PPG ~ MoV + W + PA + SoS, data = NFL3, 
+                  type = "eps-regression", kernel = "linear")
+
+# SVR con kernel POLINOMIAL
+svr_poly <- svm(PPG ~ MoV + W + PA + SoS, data = NFL3, 
+                type = "eps-regression", kernel = "polynomial")
+
+# SVR con kernel RADIAL (RBF)
+svr_radial <- svm(PPG ~ MoV + W + PA + SoS, data = NFL3, 
+                  type = "eps-regression", kernel = "radial")
+
+# SVR con kernel SIGMOID
+svr_sigmoid <- svm(PPG ~ MoV + W + PA + SoS, data = NFL3, 
+                   type = "eps-regression", kernel = "sigmoid")
+
+```
+
+```{r}
+# Función para calcular errores
+calcular_errores <- function(modelo, data){
+  pred <- predict(modelo, newdata = data)
+  mae <- mean(abs(pred - data$PPG))
+  rmse <- sqrt(mean((pred - data$PPG)^2))
+  return(c(MAE = mae, RMSE = rmse))
+}
+```
+
+```{r}
+# Errores para cada modelo
+errores_lineal <- calcular_errores(modelo_lineal1, NFL3)
+errores_linear_svr <- calcular_errores(svr_linear, NFL3)
+errores_poly_svr <- calcular_errores(svr_poly, NFL3)
+errores_radial_svr <- calcular_errores(svr_radial, NFL3)
+errores_sigmoid_svr <- calcular_errores(svr_sigmoid, NFL3)
+
+# Mostrar comparación
+data.frame(
+  Modelo = c("Lineal", "SVR Linear", "SVR Polynomial", "SVR Radial", "SVR Sigmoid"),
+  MAE = c(errores_lineal["MAE"], errores_linear_svr["MAE"], errores_poly_svr["MAE"],
+          errores_radial_svr["MAE"], errores_sigmoid_svr["MAE"]),
+  RMSE = c(errores_lineal["RMSE"], errores_linear_svr["RMSE"], errores_poly_svr["RMSE"],
+           errores_radial_svr["RMSE"], errores_sigmoid_svr["RMSE"])
+)
+```
+| Kernel         | Descripción                                                        | Uso típico                                        |
+| -------------- | ------------------------------------------------------------------ | ------------------------------------------------- |
+| `linear`       | Usa una función lineal: intenta ajustar una línea recta            | Cuando crees que la relación es lineal            |
+| `polynomial`   | Usa una curva polinómica: permite modelar relaciones más complejas | Si los datos tienen una relación curva            |
+| `radial` (RBF) | Kernel Gaussiano: transforma datos al espacio infinito             | Muy potente para relaciones no lineales complejas |
+| `sigmoid`      | Similar a una red neuronal con activación sigmoide                 | Menos común, se comporta como una SVM logística   |
+
+
+```{r}
+# Filtro solo Buffalo
+buffalo <- subset(NFL3, Tm == "Buffalo Bills*")
+
+# Predicciones
+predict(modelo_lineal1, newdata = buffalo_t)       # Lineal
+predict(svr_linear, newdata = buffalo_t)           # SVR Linear
+predict(svr_poly, newdata = buffalo_t)             # SVR Polynomial
+predict(svr_radial, newdata = buffalo_t)           # SVR Radial
+predict(svr_sigmoid, newdata = buffalo_t)          # SVR Sigmoid
+
+```
+
+VERIFICAR QUE TAN CORRECTO ES EL MODELO COMPARANDO A LOS DATOS REALES DEL EQUIPO, POR EJMMPLO LOS ULTIMOS, R2 cercano a 1 es precisión de la variable de entrenamiento respecto a la de prueba. RMSE y MAE cercanos a 0 definen acercamiento al error
+```{r}
+# 1. Cargar librerías
+library(caret)     # para particionar datos
+library(Metrics)   # para MAE y RMSE
+
+# 2. Partir en entrenamiento (75%) y prueba (25%)
+set.seed(123)
+particion <- createDataPartition(NFL3$PPG, p = 0.75, list = FALSE)
+entrenamiento <- NFL3[particion, ]
+prueba <- NFL3[-particion, ]
+
+# 3. Ajustar modelo lineal con datos de entrenamiento
+modelo_lineal1 <- lm(PPG ~ MoV + W + PA + SoS, data = entrenamiento)
+
+# 4. Predecir sobre el set de prueba
+predicciones <- predict(modelo_lineal1, newdata = prueba)
+
+# 5. Evaluar con métricas
+r2 <- R2(predicciones, prueba$PPG)   # De caret
+rmse_val <- rmse(prueba$PPG, predicciones)
+mae_val <- mae(prueba$PPG, predicciones)
+
+# 6. Mostrar resultados
+cat("R2:", round(r2, 4), "\n")
+cat("RMSE:", round(rmse_val, 2), "\n")
+cat("MAE:", round(mae_val, 2), "\n")
+
+```
+
+```{r}
+NFLoff <- read_csv("offensive2024.csv")
+NFLoff
+```
+
+```{r}
+names(NFLoff)
+```
+
+```{r}
+library(Boruta)
+boruta_result <- Boruta(PF ~ ., data = NFLoff, doTrace = 2)
+print(boruta_result)
+plot(boruta_result)
+confirmedB1 <- getSelectedAttributes(boruta_result, withTentative = FALSE)
+print(confirmedB1)
+```
+```{r}
+names(NFLfinal)
+```
+
+
+```{r}
+# --- LIBRERÍAS NECESARIAS ---
+if(!require(corrplot)) install.packages("corrplot")
+library(corrplot)
+library(ggplot2)
+
+# 1. GENERACIÓN DEL HEATMAP (Mapa de Correlación)
+# Seleccionamos las variables numéricas clave para mostrar la colinealidad
+nfl_cor <- NFLfinal[, c("PPG_nuevo", "MoV", "OSRS", "PD_2024", "L_2024")]
+matriz_cor <- cor(nfl_cor, use = "complete.obs")
+
+# Graficamos con un estilo profesional
+corrplot(matriz_cor, 
+         method = "color", 
+         type = "upper", 
+         addCoef.col = "black", # Muestra los números de correlación
+         tl.col = "black", 
+         tl.srt = 45, 
+         col = colorRampPalette(c("#e74c3c", "white", "#3498db"))(200),
+         title = "\n\n Correlation Matrix: Identifying Collinearity",
+         mar = c(0,0,1,0))
+
+
+```
+
+
+
+```{r}
+# --- 2. GENERACIÓN DEL SCATTER PLOT (Real vs Predicho) ---
+
+# 1. Aseguramos que la columna de victorias tenga un nombre simple para evitar errores de eval()
+# Si tu columna se llama 'W%' o similar, la renombramos a 'W' en una copia temporal
+NFL_grafico <- NFLfinal
+colnames(NFL_grafico)[grep("W", colnames(NFL_grafico))[1]] <- "W" # Busca la columna que contenga 'W' y la renombra
+
+# 2. Verificamos que el modelo_lineal1 exista
+if(exists("modelo_lineal1")) {
+  
+  # Intentamos crear el dataframe de predicción
+  # Usamos tryCatch para que si falla, nos diga exactamente por qué sin colapsar R
+  tryCatch({
+    datos_prediccion <- data.frame(
+      Real = NFL_grafico$PPG_nuevo,
+      Predicho = predict(modelo_lineal1, newdata = NFL_grafico)
+    )
+    
+    # 3. Graficamos
+    print(
+      ggplot(datos_prediccion, aes(x = Real, y = Predicho)) +
+        geom_point(color = "#3498db", size = 3, alpha = 0.6) + 
+        geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "grey") + 
+        geom_smooth(method = "lm", color = "#e74c3c", se = TRUE) + 
+        labs(title = "Validación del Modelo: Valores Reales vs. Predicciones",
+             subtitle = "Modelo Lineal 1: Análisis de Precisión",
+             x = "PPG Real (Points Per Game)",
+             y = "PPG Predicho por el Modelo") +
+        theme_minimal() +
+        theme(plot.title = element_text(face = "bold", size = 14))
+    )
+    
+  }, error = function(e) {
+    cat("Error específico al predecir:", e$message, "\n")
+    cat("Revisa si los nombres de las columnas en NFLfinal son iguales a los que usaste al entrenar el modelo.")
+  })
+  
+} else {
+  print("Error: El objeto 'modelo_lineal1' no existe en el entorno actual.")
+}
+```
+
+
+

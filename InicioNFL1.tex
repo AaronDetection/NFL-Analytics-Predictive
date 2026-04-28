@@ -1,0 +1,2459 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={NFLCleanData1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{NFLCleanData1}
+\author{}
+\date{\vspace{-2.5em}2025-05-27}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Boruta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'Boruta' was built under R version 4.5.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'gdata' was built under R version 4.5.3
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'gdata'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     combine, first, last, starts_with
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     nobs
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:utils':
+## 
+##     object.size
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     startsWith
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(e1071)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'e1071' was built under R version 4.5.3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL1 }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"DataNFLPointsOffense.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 20 Columns: 12
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (1): Tm
+## dbl (11): W, L, W-L%, PF, PA, PD, MoV, SoS, SRS, OSRS, DSRS
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 20 x 12
+##    Tm             W     L `W-L%`    PF    PA    PD   MoV   SoS   SRS  OSRS  DSRS
+##    <chr>      <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 AFC East      NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+##  2 Buffalo B~    13     4    765   525   368   157   9.2  -1.1   8.1   7.8   0.3
+##  3 Miami Dol~     8     9    471   345   364   -19  -1.1  -1.9  -3    -3.5   0.4
+##  4 New York ~     5    12    294   338   404   -66  -3.9  -0.5  -4.3  -3    -1.4
+##  5 New Engla~     4    13    235   289   417  -128  -7.5  -0.6  -8.1  -6.2  -1.9
+##  6 AFC North     NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+##  7 Baltimore~    12     5    706   518   361   157   9.2   0.6   9.9   8     1.9
+##  8 Pittsburg~    10     7    588   380   347    33   1.9   0.1   2.1  -0.7   2.8
+##  9 Cincinnat~     9     8    529   472   434    38   2.2  -0.8   1.4   5    -3.6
+## 10 Cleveland~     3    14    176   258   435  -177 -10.4   1.2  -9.2  -7.1  -2.1
+## 11 AFC South     NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+## 12 Houston T~    10     7    588   372   372     0   0    -0.7  -0.7  -1.5   0.8
+## 13 Indianapo~     8     9    471   377   427   -50  -2.9  -0.7  -3.7  -0.5  -3.2
+## 14 Jacksonvi~     4    13    235   320   435  -115  -6.8  -0.8  -7.5  -4.2  -3.4
+## 15 Tennessee~     3    14    176   311   460  -149  -8.8   0.4  -8.4  -4.7  -3.7
+## 16 AFC West      NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+## 17 Kansas Ci~    15     2    882   385   326    59   3.5   0.7   4.2  -0.2   4.4
+## 18 Los Angel~    11     6    647   402   301   101   5.9  -0.6   5.3   0.6   4.7
+## 19 Denver Br~    10     7    588   425   311   114   6.7  -0.3   6.4   2.1   4.3
+## 20 Las Vegas~     4    13    235   309   434  -125  -7.4   1    -6.4  -3.9  -2.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"DataNFLPointsOffense2.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 20 Columns: 12
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (1): Tm
+## dbl (11): W, L, W-L%, PF, PA, PD, MoV, SoS, SRS, OSRS, DSRS
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 20 x 12
+##    Tm             W     L `W-L%`    PF    PA    PD   MoV   SoS   SRS  OSRS  DSRS
+##    <chr>      <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 NFC East      NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+##  2 Philadelp~    14     3    824   463   303   160   9.4  -1.7   7.7   3     4.7
+##  3 Washingto~    12     5    706   485   391    94   5.5  -1.8   3.7   4.9  -1.2
+##  4 Dallas Co~     7    10    412   350   468  -118  -6.9   0.6  -6.3  -2.6  -3.7
+##  5 New York ~     3    14    176   273   415  -142  -8.4   0.3  -8    -7.5  -0.5
+##  6 NFC North     NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+##  7 Detroit L~    15     2    882   564   342   222  13.1   0.7  13.8  10.6   3.2
+##  8 Minnesota~    14     3    824   432   332   100   5.9   0.3   6.2   2.8   3.4
+##  9 Green Bay~    11     6    647   460   338   122   7.2   0.9   8.1   4.9   3.2
+## 10 Chicago B~     5    12    294   310   370   -60  -3.5   1.2  -2.3  -4.8   2.4
+## 11 NFC South     NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+## 12 Tampa Bay~    10     7    588   502   385   117   6.9  -0.4   6.4   6     0.4
+## 13 Atlanta F~     8     9    471   389   423   -34  -2    -0.2  -2.2   0    -2.2
+## 14 Carolina ~     5    12    294   341   534  -193 -11.4   0.4 -11    -2.6  -8.4
+## 15 New Orlea~     5    12    294   338   398   -60  -3.5  -0.6  -4.1  -3.6  -0.5
+## 16 NFC West      NA    NA     NA    NA    NA    NA  NA    NA    NA    NA    NA  
+## 17 Los Angel~    10     7    588   367   386   -19  -1.1   1.1  -0.1  -0.6   0.6
+## 18 Seattle S~    10     7    588   375   368     7   0.4   0.8   1.3  -0.3   1.5
+## 19 Arizona C~     8     9    471   400   379    21   1.2   0.9   2.1   0.8   1.2
+## 20 San Franc~     6    11    353   389   436   -47  -2.8   1.6  -1.2   0.9  -2.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFLpre }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"NFLpree.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 32 Columns: 6
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (1): Tm
+## dbl (5): W, L, PF, PA, PD
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFLpre}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32 x 6
+##    Tm                       W     L    PF    PA    PD
+##    <chr>                <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 Miami Dolphins           2     0    62    47    15
+##  2 New England Patriots     2     1    78    72     6
+##  3 Buffalo Bills            1     2    48    91   -43
+##  4 New York Jets            1     2    59    60    -1
+##  5 Baltimore Ravens         3     0    85    32    53
+##  6 Cleveland Browns         3     0    71    40    31
+##  7 Pittsburgh Steelers      2     1    64    52    12
+##  8 Cincinnati Bengals       1     2    72    92   -20
+##  9 Tennessee Titans         2     1    53    62    -9
+## 10 Houston Texans           2     1    56    30    26
+## # i 22 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL\_combined }\OtherTok{\textless{}{-}} \FunctionTok{rbind}\NormalTok{(NFL1[, }\FunctionTok{names}\NormalTok{(NFL2)], NFL2)}
+\NormalTok{NFL3 }\OtherTok{\textless{}{-}}\NormalTok{ NFL\_combined[}\FunctionTok{complete.cases}\NormalTok{(NFL\_combined),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{PPG }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{ (NFL3}\SpecialCharTok{$}\NormalTok{PF }\SpecialCharTok{/} \DecValTok{17}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(NFL3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Tm"   "W"    "L"    "W-L%" "PF"   "PA"   "PD"   "MoV"  "SoS"  "SRS" 
+## [11] "OSRS" "DSRS" "PPG"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Buffalo Bills"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Baltimore Ravens*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Baltimore Ravens"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Pittsburgh Steelers+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Pittsburgh Steelers"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Houston Texans*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Houston Texans"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Kansas City Chiefs*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Kansas City Chiefs"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Los Angeles Chargers+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Los Angeles Chargers"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Denver Broncos+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Denver Broncos"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Philadelphia Eagles*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Philadelphia Eagles"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Washington Commanders+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Washington Commanders"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Detroit Lions*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Detroit Lions"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Minnesota Vikings+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Minnesota Vikings"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Green Bay Packers+"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Green Bay Packers"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Tampa Bay Buccaneers*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Tampa Bay Buccaneers"}
+\NormalTok{NFL3}\SpecialCharTok{$}\NormalTok{Tm[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Los Angeles Rams*"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Los Angeles Rams"}
+\NormalTok{NFL3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32 x 13
+##    Tm             W     L `W-L%`    PF    PA    PD   MoV   SoS   SRS  OSRS  DSRS
+##    <chr>      <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 Buffalo B~    13     4    765   525   368   157   9.2  -1.1   8.1   7.8   0.3
+##  2 Miami Dol~     8     9    471   345   364   -19  -1.1  -1.9  -3    -3.5   0.4
+##  3 New York ~     5    12    294   338   404   -66  -3.9  -0.5  -4.3  -3    -1.4
+##  4 New Engla~     4    13    235   289   417  -128  -7.5  -0.6  -8.1  -6.2  -1.9
+##  5 Baltimore~    12     5    706   518   361   157   9.2   0.6   9.9   8     1.9
+##  6 Pittsburg~    10     7    588   380   347    33   1.9   0.1   2.1  -0.7   2.8
+##  7 Cincinnat~     9     8    529   472   434    38   2.2  -0.8   1.4   5    -3.6
+##  8 Cleveland~     3    14    176   258   435  -177 -10.4   1.2  -9.2  -7.1  -2.1
+##  9 Houston T~    10     7    588   372   372     0   0    -0.7  -0.7  -1.5   0.8
+## 10 Indianapo~     8     9    471   377   427   -50  -2.9  -0.7  -3.7  -0.5  -3.2
+## # i 22 more rows
+## # i 1 more variable: PPG <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Unir ambas tablas por la columna Tm (equipos)}
+\NormalTok{NFLfinal }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(NFL3, NFLpre, }\AttributeTok{by =} \StringTok{"Tm"}\NormalTok{, }\AttributeTok{all.X =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Verificar resultado}
+\CommentTok{\# head(NFLfinal)}
+
+\NormalTok{NFLfinal }\OtherTok{\textless{}{-}}\NormalTok{ NFL3 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{inner\_join}\NormalTok{(NFLpre, }\AttributeTok{by =} \StringTok{"Tm"}\NormalTok{, }\AttributeTok{suffix =} \FunctionTok{c}\NormalTok{(}\StringTok{"\_2024"}\NormalTok{, }\StringTok{"\_pre"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Juegos de temporada regular 2024}
+    \AttributeTok{G\_2024 =}\NormalTok{ W\_2024 }\SpecialCharTok{+}\NormalTok{ L\_2024,   }\CommentTok{\# viene de W y L de NFL3}
+    
+    \CommentTok{\# Puntos totales sumando pretemporada}
+    \AttributeTok{PF\_total =}\NormalTok{ PF\_2024 }\SpecialCharTok{+}\NormalTok{ PF\_pre,}
+    
+    \CommentTok{\# Juegos totales (W+L de 2024 + asumimos 3 fijos en pretemporada) AÑADIMOS X JUEGOS HASTA       AHORA}
+    \AttributeTok{G\_total =}\NormalTok{ G\_2024 }\SpecialCharTok{+} \DecValTok{3}\NormalTok{,  }
+    
+    \CommentTok{\# Nuevo promedio de puntos por partido}
+    \AttributeTok{PPG\_nuevo =}\NormalTok{ PF\_total }\SpecialCharTok{/}\NormalTok{ G\_total}
+\NormalTok{  )}
+
+\NormalTok{NFLfinal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32 x 22
+##    Tm       W_2024 L_2024 `W-L%` PF_2024 PA_2024 PD_2024   MoV   SoS   SRS  OSRS
+##    <chr>     <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 Buffalo~     13      4    765     525     368     157   9.2  -1.1   8.1   7.8
+##  2 Miami D~      8      9    471     345     364     -19  -1.1  -1.9  -3    -3.5
+##  3 New Yor~      5     12    294     338     404     -66  -3.9  -0.5  -4.3  -3  
+##  4 New Eng~      4     13    235     289     417    -128  -7.5  -0.6  -8.1  -6.2
+##  5 Baltimo~     12      5    706     518     361     157   9.2   0.6   9.9   8  
+##  6 Pittsbu~     10      7    588     380     347      33   1.9   0.1   2.1  -0.7
+##  7 Cincinn~      9      8    529     472     434      38   2.2  -0.8   1.4   5  
+##  8 Clevela~      3     14    176     258     435    -177 -10.4   1.2  -9.2  -7.1
+##  9 Houston~     10      7    588     372     372       0   0    -0.7  -0.7  -1.5
+## 10 Indiana~      8      9    471     377     427     -50  -2.9  -0.7  -3.7  -0.5
+## # i 22 more rows
+## # i 11 more variables: DSRS <dbl>, PPG <dbl>, W_pre <dbl>, L_pre <dbl>,
+## #   PF_pre <dbl>, PA_pre <dbl>, PD_pre <dbl>, G_2024 <dbl>, PF_total <dbl>,
+## #   G_total <dbl>, PPG_nuevo <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boruta\_result }\OtherTok{\textless{}{-}} \FunctionTok{Boruta}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ NFL3, }\AttributeTok{doTrace =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  1. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  2. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  3. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  4. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  5. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  6. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  7. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  8. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  9. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  10. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  11. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 11 iterations, +1.1 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  confirmed 8 attributes: L, MoV, OSRS, PD, PF and 3 more;
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 2 attributes: SoS, Tm;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 2 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  12. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  13. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  14. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  15. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  16. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  17. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  18. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  19. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  20. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  21. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  22. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  23. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  24. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  25. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  26. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  27. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  28. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  29. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  30. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  31. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  32. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  33. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  34. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  35. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  36. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  37. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  38. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  39. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  40. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  41. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  42. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  43. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  44. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  45. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  46. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  47. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  48. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  49. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  50. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  51. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  52. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  53. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  54. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  55. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  56. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  57. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  58. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  59. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  60. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  61. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  62. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  63. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  64. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  65. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  66. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  67. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  68. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  69. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  70. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  71. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  72. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 72 iterations, +1.9 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  confirmed 1 attribute: PA;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 1 attribute left.
+\end{verbatim}
+
+\begin{verbatim}
+##  73. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  74. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  75. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  76. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  77. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  78. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  79. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  80. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  81. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  82. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  83. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  84. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  85. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  86. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  87. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  88. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  89. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  90. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  91. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  92. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  93. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  94. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  95. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  96. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  97. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  98. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  99. run of importance source...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(boruta\_result)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Boruta performed 99 iterations in 2.286206 secs.
+##  9 attributes confirmed important: L, MoV, OSRS, PA, PD and 4 more;
+##  2 attributes confirmed unimportant: SoS, Tm;
+##  1 tentative attributes left: DSRS;
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(boruta\_result)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{InicioNFL1_files/figure-latex/unnamed-chunk-10-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boruta\_result25 }\OtherTok{\textless{}{-}} \FunctionTok{Boruta}\NormalTok{(PPG\_nuevo }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ NFLfinal, }\AttributeTok{doTrace =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  1. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  2. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  3. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  4. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  5. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  6. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  7. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  8. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  9. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  10. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  11. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  12. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 12 iterations, +0.22 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  confirmed 10 attributes: L_2024, MoV, OSRS, PD_2024, PF_2024 and 5 more;
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 7 attributes: G_2024, G_total, PD_pre, PF_pre, SoS and 2 more;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 4 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  13. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  14. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  15. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  16. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 16 iterations, +0.29 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 1 attribute: L_pre;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 3 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  17. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  18. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  19. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  20. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  21. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  22. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 22 iterations, +0.39 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 2 attributes: DSRS, PA_pre;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 1 attribute left.
+\end{verbatim}
+
+\begin{verbatim}
+##  23. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  24. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  25. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  26. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  27. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  28. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  29. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  30. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  31. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  32. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  33. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  34. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  35. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  36. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  37. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  38. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  39. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  40. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  41. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  42. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  43. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  44. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  45. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  46. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  47. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  48. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  49. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  50. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  51. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  52. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  53. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  54. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  55. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  56. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  57. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  58. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  59. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  60. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  61. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  62. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  63. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  64. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  65. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  66. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  67. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  68. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  69. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  70. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  71. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  72. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  73. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  74. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  75. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  76. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  77. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  78. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  79. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  80. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  81. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  82. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  83. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  84. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  85. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  86. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  87. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  88. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  89. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  90. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  91. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  92. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  93. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  94. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  95. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  96. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  97. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  98. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  99. run of importance source...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(boruta\_result25)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Boruta performed 99 iterations in 1.561488 secs.
+##  10 attributes confirmed important: L_2024, MoV, OSRS, PD_2024, PF_2024
+## and 5 more;
+##  10 attributes confirmed unimportant: DSRS, G_2024, G_total, L_pre,
+## PA_pre and 5 more;
+##  1 tentative attributes left: PA_2024;
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(boruta\_result25)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{InicioNFL1_files/figure-latex/unnamed-chunk-11-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Resultados detallados de Boruta}
+\NormalTok{boruta\_result25}\SpecialCharTok{$}\NormalTok{finalDecision  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Tm    W_2024    L_2024      W-L%   PF_2024   PA_2024   PD_2024       MoV 
+##  Rejected Confirmed Confirmed Confirmed Confirmed Tentative Confirmed Confirmed 
+##       SoS       SRS      OSRS      DSRS       PPG     W_pre     L_pre    PF_pre 
+##  Rejected Confirmed Confirmed  Rejected Confirmed  Rejected  Rejected  Rejected 
+##    PA_pre    PD_pre    G_2024  PF_total   G_total 
+##  Rejected  Rejected  Rejected Confirmed  Rejected 
+## Levels: Tentative Confirmed Rejected
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Importancia numérica (se puede ordenar)}
+\NormalTok{importance }\OtherTok{\textless{}{-}} \FunctionTok{attStats}\NormalTok{(boruta\_result25)}
+\NormalTok{importance[}\FunctionTok{order}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{importance}\SpecialCharTok{$}\NormalTok{meanImp), ]   }\CommentTok{\# de mayor a menor importancia}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              meanImp   medianImp     minImp     maxImp   normHits  decision
+## PF_total 11.20278817 11.21265426  9.3293379 12.5208607 1.00000000 Confirmed
+## PPG      10.10637136 10.19871518  9.0104237 11.1174149 1.00000000 Confirmed
+## PF_2024  10.06569027  9.97658203  8.8858796 11.1625780 1.00000000 Confirmed
+## OSRS      9.08492965  9.08160682  7.8957137 10.4626014 1.00000000 Confirmed
+## PD_2024   7.91874912  7.91887295  6.5882660  9.0168639 1.00000000 Confirmed
+## MoV       7.81306184  7.78578509  6.6695367  9.2197514 1.00000000 Confirmed
+## SRS       6.71478109  6.74845729  5.5597345  8.2374581 1.00000000 Confirmed
+## L_2024    5.63660365  5.66929911  4.4977088  7.2417760 1.00000000 Confirmed
+## W_2024    5.37529530  5.36942832  4.0309223  6.7278733 1.00000000 Confirmed
+## W-L%      5.35433482  5.37404999  4.2904228  6.4668740 1.00000000 Confirmed
+## PA_2024   2.22378809  2.26944449 -0.5260092  3.8816822 0.61616162 Tentative
+## PA_pre    1.15318493  1.32653540 -1.3396254  2.3918793 0.03030303  Rejected
+## DSRS      0.69075716  0.80511605 -0.7474238  2.6077079 0.03030303  Rejected
+## Tm        0.01934852  0.05814382 -1.0313072  1.4895866 0.00000000  Rejected
+## G_2024    0.00000000  0.00000000  0.0000000  0.0000000 0.00000000  Rejected
+## G_total   0.00000000  0.00000000  0.0000000  0.0000000 0.00000000  Rejected
+## W_pre    -0.73323043 -0.82250581 -2.5849166  1.2389205 0.00000000  Rejected
+## L_pre    -0.86594678 -0.99094839 -2.1136062  2.0267765 0.01010101  Rejected
+## PD_pre   -0.99422828 -1.20068683 -2.3192348  0.8887954 0.00000000  Rejected
+## PF_pre   -1.22589096 -1.70817796 -2.0563457  0.3072337 0.00000000  Rejected
+## SoS      -1.48879255 -1.67623113 -2.6975667 -0.3489865 0.00000000  Rejected
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_lineal }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV  }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3)}
+\NormalTok{modelo\_lineal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = PPG ~ MoV + W + PA + SoS, data = NFL3)
+## 
+## Coefficients:
+## (Intercept)          MoV            W           PA          SoS  
+##   -0.114093     1.004422    -0.005778     0.059277     0.003693
+\end{verbatim}
+
+El modelo tiene valor a la hora de simular escenarios, puedes usar
+variables de los últimos partidos de 2024, para estimar el PPG de 2025
+que todavía no haya salido, y puedes probar en colocar tu propio MoV
+estimado si el team se enfrenta a otro team débil.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ENTRENAMIENTO del modelo con todos los equipos}
+\NormalTok{modelo\_lineal1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV  }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3)}
+\FunctionTok{summary}\NormalTok{(modelo\_lineal1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = PPG ~ MoV + W + PA + SoS, data = NFL3)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.078642 -0.019154 -0.002597  0.026004  0.094133 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.1140925  0.1028596  -1.109    0.277    
+## MoV          1.0044224  0.0031708 316.774   <2e-16 ***
+## W           -0.0057780  0.0049094  -1.177    0.249    
+## PA           0.0592766  0.0002402 246.741   <2e-16 ***
+## SoS          0.0036928  0.0084268   0.438    0.665    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.04245 on 27 degrees of freedom
+## Multiple R-squared:  0.9999, Adjusted R-squared:  0.9999 
+## F-statistic: 8.864e+04 on 4 and 27 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# PREDICCIÓN solo para Buffalo Bills VALORES FIJOS DE LA TABLA}
+\NormalTok{buffalo }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(NFL3, Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills*"}\NormalTok{)}
+\FunctionTok{predict}\NormalTok{(modelo\_lineal1, }\AttributeTok{newdata =}\NormalTok{ buffalo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## numeric(0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ENTRENAMIENTO del modelo con todos los equipos}
+\NormalTok{modelolin2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(PPG\_nuevo }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV  }\SpecialCharTok{+}\NormalTok{ OSRS }\SpecialCharTok{+}\NormalTok{ PD\_2024 , }\AttributeTok{data =}\NormalTok{ NFLfinal)}
+\FunctionTok{summary}\NormalTok{(modelolin2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = PPG_nuevo ~ MoV + OSRS + PD_2024, data = NFLfinal)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.4330 -0.5974 -0.1599  0.7180  2.0292 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 22.60312    0.16275 138.880  < 2e-16 ***
+## MoV         -2.26715    5.35611  -0.423    0.675    
+## OSRS         0.53259    0.08113   6.565 4.06e-07 ***
+## PD_2024      0.14565    0.31574   0.461    0.648    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.9009 on 28 degrees of freedom
+## Multiple R-squared:  0.9494, Adjusted R-squared:  0.944 
+## F-statistic: 175.1 on 3 and 28 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelolin2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = PPG_nuevo ~ MoV + OSRS + PD_2024, data = NFLfinal)
+## 
+## Coefficients:
+## (Intercept)          MoV         OSRS      PD_2024  
+##     22.6031      -2.2671       0.5326       0.1456
+\end{verbatim}
+
+PARA APLICAR LOS VALORES QUE TU DESEES
+\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&\&7
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear un nuevo data.frame con los valores personalizados}
+\NormalTok{buffalo\_t }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{MoV =} \DecValTok{7}\NormalTok{,                      }\CommentTok{\# Nuevo valor personalizado + variables a usar}
+  \AttributeTok{W =}\NormalTok{ NFL3}\SpecialCharTok{$}\NormalTok{W[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills"}\NormalTok{],}
+  \AttributeTok{PA =}\NormalTok{ NFL3}\SpecialCharTok{$}\NormalTok{PA[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills"}\NormalTok{],}
+  \AttributeTok{SoS =}\NormalTok{ NFL3}\SpecialCharTok{$}\NormalTok{SoS[NFL3}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills"}\NormalTok{]}
+\NormalTok{)}
+
+\CommentTok{\# Predecir usando modelo lineal}
+\FunctionTok{predict}\NormalTok{(modelo\_lineal1, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 28.65146
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFLfinal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32 x 22
+##    Tm       W_2024 L_2024 `W-L%` PF_2024 PA_2024 PD_2024   MoV   SoS   SRS  OSRS
+##    <chr>     <dbl>  <dbl>  <dbl>   <dbl>   <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>
+##  1 Buffalo~     13      4    765     525     368     157   9.2  -1.1   8.1   7.8
+##  2 Miami D~      8      9    471     345     364     -19  -1.1  -1.9  -3    -3.5
+##  3 New Yor~      5     12    294     338     404     -66  -3.9  -0.5  -4.3  -3  
+##  4 New Eng~      4     13    235     289     417    -128  -7.5  -0.6  -8.1  -6.2
+##  5 Baltimo~     12      5    706     518     361     157   9.2   0.6   9.9   8  
+##  6 Pittsbu~     10      7    588     380     347      33   1.9   0.1   2.1  -0.7
+##  7 Cincinn~      9      8    529     472     434      38   2.2  -0.8   1.4   5  
+##  8 Clevela~      3     14    176     258     435    -177 -10.4   1.2  -9.2  -7.1
+##  9 Houston~     10      7    588     372     372       0   0    -0.7  -0.7  -1.5
+## 10 Indiana~      8      9    471     377     427     -50  -2.9  -0.7  -3.7  -0.5
+## # i 22 more rows
+## # i 11 more variables: DSRS <dbl>, PPG <dbl>, W_pre <dbl>, L_pre <dbl>,
+## #   PF_pre <dbl>, PA_pre <dbl>, PD_pre <dbl>, G_2024 <dbl>, PF_total <dbl>,
+## #   G_total <dbl>, PPG_nuevo <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Asegúrate de que el modelo es este:}
+\NormalTok{modelob\_nfl }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(PPG\_nuevo }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ OSRS }\SpecialCharTok{+}\NormalTok{ L\_2024, }\AttributeTok{data =}\NormalTok{ NFLfinal)}
+\NormalTok{modelob\_nfl}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = PPG_nuevo ~ MoV + OSRS + L_2024, data = NFLfinal)
+## 
+## Coefficients:
+## (Intercept)          MoV         OSRS       L_2024  
+##     20.9963       0.3001       0.5406       0.1909
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear datos de prueba para Kansas City}
+\NormalTok{kc\_t }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{MoV =} \DecValTok{2}\NormalTok{,  }\CommentTok{\# valor que quieres probar (ej. 3.5 real → 7 hipotético)}
+  \AttributeTok{OSRS =} \DecValTok{0}\NormalTok{,}
+  \AttributeTok{L\_2024 =}\NormalTok{ NFLfinal}\SpecialCharTok{$}\NormalTok{L\_2024[NFLfinal}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Houston Texans"}\NormalTok{]}
+\NormalTok{)}
+
+\CommentTok{\# Predecir}
+\FunctionTok{predict}\NormalTok{(modelob\_nfl, }\AttributeTok{newdata =}\NormalTok{ kc\_t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       1 
+## 22.9331
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear datos de prueba para Kansas City}
+\NormalTok{bc\_t }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{MoV =} \FloatTok{0.5}\NormalTok{,  }
+  \CommentTok{\# valor que quieres probar (ej. 3.5 real → 7 hipotético)}
+  \AttributeTok{OSRS =} \FloatTok{1.5}\NormalTok{,}
+  \AttributeTok{L\_2024 =}\NormalTok{ NFLfinal}\SpecialCharTok{$}\NormalTok{L\_2024[NFLfinal}\SpecialCharTok{$}\NormalTok{Tm }\SpecialCharTok{==} \StringTok{"Los Angeles Rams"}\NormalTok{]}
+\NormalTok{)}
+
+\CommentTok{\# Predecir}
+\FunctionTok{predict}\NormalTok{(modelob\_nfl, }\AttributeTok{newdata =}\NormalTok{ bc\_t)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 23.29375
+\end{verbatim}
+
+ENTRENAMIENTO DE MODELO KERNEL
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# SVR con kernel LINEAL}
+\NormalTok{svr\_linear }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3, }
+                  \AttributeTok{type =} \StringTok{"eps{-}regression"}\NormalTok{, }\AttributeTok{kernel =} \StringTok{"linear"}\NormalTok{)}
+
+\CommentTok{\# SVR con kernel POLINOMIAL}
+\NormalTok{svr\_poly }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3, }
+                \AttributeTok{type =} \StringTok{"eps{-}regression"}\NormalTok{, }\AttributeTok{kernel =} \StringTok{"polynomial"}\NormalTok{)}
+
+\CommentTok{\# SVR con kernel RADIAL (RBF)}
+\NormalTok{svr\_radial }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3, }
+                  \AttributeTok{type =} \StringTok{"eps{-}regression"}\NormalTok{, }\AttributeTok{kernel =} \StringTok{"radial"}\NormalTok{)}
+
+\CommentTok{\# SVR con kernel SIGMOID}
+\NormalTok{svr\_sigmoid }\OtherTok{\textless{}{-}} \FunctionTok{svm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ NFL3, }
+                   \AttributeTok{type =} \StringTok{"eps{-}regression"}\NormalTok{, }\AttributeTok{kernel =} \StringTok{"sigmoid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Función para calcular errores}
+\NormalTok{calcular\_errores }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(modelo, data)\{}
+\NormalTok{  pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modelo, }\AttributeTok{newdata =}\NormalTok{ data)}
+\NormalTok{  mae }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(pred }\SpecialCharTok{{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{PPG))}
+\NormalTok{  rmse }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{((pred }\SpecialCharTok{{-}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{PPG)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\AttributeTok{MAE =}\NormalTok{ mae, }\AttributeTok{RMSE =}\NormalTok{ rmse))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Errores para cada modelo}
+\NormalTok{errores\_lineal }\OtherTok{\textless{}{-}} \FunctionTok{calcular\_errores}\NormalTok{(modelo\_lineal1, NFL3)}
+\NormalTok{errores\_linear\_svr }\OtherTok{\textless{}{-}} \FunctionTok{calcular\_errores}\NormalTok{(svr\_linear, NFL3)}
+\NormalTok{errores\_poly\_svr }\OtherTok{\textless{}{-}} \FunctionTok{calcular\_errores}\NormalTok{(svr\_poly, NFL3)}
+\NormalTok{errores\_radial\_svr }\OtherTok{\textless{}{-}} \FunctionTok{calcular\_errores}\NormalTok{(svr\_radial, NFL3)}
+\NormalTok{errores\_sigmoid\_svr }\OtherTok{\textless{}{-}} \FunctionTok{calcular\_errores}\NormalTok{(svr\_sigmoid, NFL3)}
+
+\CommentTok{\# Mostrar comparación}
+\FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Modelo =} \FunctionTok{c}\NormalTok{(}\StringTok{"Lineal"}\NormalTok{, }\StringTok{"SVR Linear"}\NormalTok{, }\StringTok{"SVR Polynomial"}\NormalTok{, }\StringTok{"SVR Radial"}\NormalTok{, }\StringTok{"SVR Sigmoid"}\NormalTok{),}
+  \AttributeTok{MAE =} \FunctionTok{c}\NormalTok{(errores\_lineal[}\StringTok{"MAE"}\NormalTok{], errores\_linear\_svr[}\StringTok{"MAE"}\NormalTok{], errores\_poly\_svr[}\StringTok{"MAE"}\NormalTok{],}
+\NormalTok{          errores\_radial\_svr[}\StringTok{"MAE"}\NormalTok{], errores\_sigmoid\_svr[}\StringTok{"MAE"}\NormalTok{]),}
+  \AttributeTok{RMSE =} \FunctionTok{c}\NormalTok{(errores\_lineal[}\StringTok{"RMSE"}\NormalTok{], errores\_linear\_svr[}\StringTok{"RMSE"}\NormalTok{], errores\_poly\_svr[}\StringTok{"RMSE"}\NormalTok{],}
+\NormalTok{           errores\_radial\_svr[}\StringTok{"RMSE"}\NormalTok{], errores\_sigmoid\_svr[}\StringTok{"RMSE"}\NormalTok{])}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           Modelo        MAE      RMSE
+## 1         Lineal 0.03028273 0.0389914
+## 2     SVR Linear 0.25489625 0.2916914
+## 3 SVR Polynomial 1.40796285 1.9833251
+## 4     SVR Radial 0.65792834 0.9272432
+## 5    SVR Sigmoid 2.69054542 3.5692332
+\end{verbatim}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1085}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5116}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3798}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kernel
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Uso típico
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{linear} & Usa una función lineal: intenta ajustar una línea
+recta & Cuando crees que la relación es lineal \\
+\texttt{polynomial} & Usa una curva polinómica: permite modelar
+relaciones más complejas & Si los datos tienen una relación curva \\
+\texttt{radial} (RBF) & Kernel Gaussiano: transforma datos al espacio
+infinito & Muy potente para relaciones no lineales complejas \\
+\texttt{sigmoid} & Similar a una red neuronal con activación sigmoide &
+Menos común, se comporta como una SVM logística \\
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Filtro solo Buffalo}
+\NormalTok{buffalo }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(NFL3, Tm }\SpecialCharTok{==} \StringTok{"Buffalo Bills*"}\NormalTok{)}
+
+\CommentTok{\# Predicciones}
+\FunctionTok{predict}\NormalTok{(modelo\_lineal1, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)       }\CommentTok{\# Lineal}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 28.65146
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(svr\_linear, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)           }\CommentTok{\# SVR Linear}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 28.48645
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(svr\_poly, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)             }\CommentTok{\# SVR Polynomial}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 26.61067
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(svr\_radial, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)           }\CommentTok{\# SVR Radial}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 29.35077
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(svr\_sigmoid, }\AttributeTok{newdata =}\NormalTok{ buffalo\_t)          }\CommentTok{\# SVR Sigmoid}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        1 
+## 27.47998
+\end{verbatim}
+
+VERIFICAR QUE TAN CORRECTO ES EL MODELO COMPARANDO A LOS DATOS REALES
+DEL EQUIPO, POR EJMMPLO LOS ULTIMOS, R2 cercano a 1 es precisión de la
+variable de entrenamiento respecto a la de prueba. RMSE y MAE cercanos a
+0 definen acercamiento al error
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Cargar librerías}
+\FunctionTok{library}\NormalTok{(caret)     }\CommentTok{\# para particionar datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'caret' was built under R version 4.5.3
+\end{verbatim}
+
+\begin{verbatim}
+## Cargando paquete requerido: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Cargando paquete requerido: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Metrics)   }\CommentTok{\# para MAE y RMSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'Metrics' was built under R version 4.5.3
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'Metrics'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:caret':
+## 
+##     precision, recall
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:gdata':
+## 
+##     ll
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Partir en entrenamiento (75\%) y prueba (25\%)}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
+\NormalTok{particion }\OtherTok{\textless{}{-}} \FunctionTok{createDataPartition}\NormalTok{(NFL3}\SpecialCharTok{$}\NormalTok{PPG, }\AttributeTok{p =} \FloatTok{0.75}\NormalTok{, }\AttributeTok{list =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{entrenamiento }\OtherTok{\textless{}{-}}\NormalTok{ NFL3[particion, ]}
+\NormalTok{prueba }\OtherTok{\textless{}{-}}\NormalTok{ NFL3[}\SpecialCharTok{{-}}\NormalTok{particion, ]}
+
+\CommentTok{\# 3. Ajustar modelo lineal con datos de entrenamiento}
+\NormalTok{modelo\_lineal1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(PPG }\SpecialCharTok{\textasciitilde{}}\NormalTok{ MoV }\SpecialCharTok{+}\NormalTok{ W }\SpecialCharTok{+}\NormalTok{ PA }\SpecialCharTok{+}\NormalTok{ SoS, }\AttributeTok{data =}\NormalTok{ entrenamiento)}
+
+\CommentTok{\# 4. Predecir sobre el set de prueba}
+\NormalTok{predicciones }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modelo\_lineal1, }\AttributeTok{newdata =}\NormalTok{ prueba)}
+
+\CommentTok{\# 5. Evaluar con métricas}
+\NormalTok{r2 }\OtherTok{\textless{}{-}} \FunctionTok{R2}\NormalTok{(predicciones, prueba}\SpecialCharTok{$}\NormalTok{PPG)   }\CommentTok{\# De caret}
+\NormalTok{rmse\_val }\OtherTok{\textless{}{-}} \FunctionTok{rmse}\NormalTok{(prueba}\SpecialCharTok{$}\NormalTok{PPG, predicciones)}
+\NormalTok{mae\_val }\OtherTok{\textless{}{-}} \FunctionTok{mae}\NormalTok{(prueba}\SpecialCharTok{$}\NormalTok{PPG, predicciones)}
+
+\CommentTok{\# 6. Mostrar resultados}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"R2:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(r2, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R2: 0.9999
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"RMSE:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(rmse\_val, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## RMSE: 0.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"MAE:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(mae\_val, }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## MAE: 0.03
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFLoff }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"offensive2024.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## New names:
+## Rows: 32 Columns: 28
+## -- Column specification
+## -------------------------------------------------------- Delimiter: "," chr
+## (1): Tm dbl (27): Rk, G, PF, Yds...5, Ply, Y/P, TO, FL, 1stD...10, Cmp,
+## Att...12, Yd...
+## i Use `spec()` to retrieve the full column specification for this data. i
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## * `Yds` -> `Yds...5`
+## * `1stD` -> `1stD...10`
+## * `Att` -> `Att...12`
+## * `Yds` -> `Yds...13`
+## * `TD` -> `TD...14`
+## * `1stD` -> `1stD...17`
+## * `Att` -> `Att...18`
+## * `Yds` -> `Yds...19`
+## * `TD` -> `TD...20`
+## * `1stD` -> `1stD...22`
+## * `Yds` -> `Yds...24`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{NFLoff}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 32 x 28
+##       Rk Tm            G    PF Yds...5   Ply `Y/P`    TO    FL `1stD...10`   Cmp
+##    <dbl> <chr>     <dbl> <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>       <dbl> <dbl>
+##  1     1 Detroit ~    17   564    6962  1118   6.2    15     3         410   399
+##  2     2 Buffalo ~    17   525    6105  1025   6       8     2         360   329
+##  3     3 Baltimor~    17   518    7224  1055   6.8    11     7         393   318
+##  4     4 Tampa Ba~    17   502    6793  1094   6.2    23     7         395   408
+##  5     5 Washingt~    17   485    6284  1101   5.7    16     7         380   365
+##  6     6 Cincinna~    17   472    6214  1080   5.8    22    13         376   460
+##  7     7 Philadel~    17   463    6242  1114   5.6    15     9         360   303
+##  8     8 Green Ba~    17   460    6303  1027   6.1    19     8         343   308
+##  9     9 Minnesot~    17   432    5898  1054   5.6    21     9         353   364
+## 10    10 Denver B~    17   425    5518  1055   5.2    19     7         315   379
+## # i 22 more rows
+## # i 17 more variables: Att...12 <dbl>, Yds...13 <dbl>, TD...14 <dbl>,
+## #   Int <dbl>, `NY/A` <dbl>, `1stD...17` <dbl>, Att...18 <dbl>, Yds...19 <dbl>,
+## #   TD...20 <dbl>, `Y/A` <dbl>, `1stD...22` <dbl>, Pen <dbl>, Yds...24 <dbl>,
+## #   `1stPy` <dbl>, `Sc%` <dbl>, `TO%` <dbl>, EXP <dbl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(NFLoff)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Rk"        "Tm"        "G"         "PF"        "Yds...5"   "Ply"      
+##  [7] "Y/P"       "TO"        "FL"        "1stD...10" "Cmp"       "Att...12" 
+## [13] "Yds...13"  "TD...14"   "Int"       "NY/A"      "1stD...17" "Att...18" 
+## [19] "Yds...19"  "TD...20"   "Y/A"       "1stD...22" "Pen"       "Yds...24" 
+## [25] "1stPy"     "Sc%"       "TO%"       "EXP"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Boruta)}
+\NormalTok{boruta\_result }\OtherTok{\textless{}{-}} \FunctionTok{Boruta}\NormalTok{(PF }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ NFLoff, }\AttributeTok{doTrace =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  1. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  2. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  3. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  4. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  5. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  6. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  7. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  8. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  9. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  10. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  11. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  12. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 12 iterations, +0.2 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  confirmed 12 attributes: 1stD...10, 1stD...22, Att...18, EXP, NY/A and 7 more;
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 6 attributes: 1stD...17, Cmp, G, Pen, Ply and 1 more;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 9 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  13. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  14. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  15. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  16. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 16 iterations, +0.27 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 5 attributes: 1stPy, Att...12, FL, Int, Yds...24;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 4 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  17. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  18. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  19. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  20. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  21. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  22. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  23. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  24. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  25. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  26. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  27. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  28. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  29. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  30. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  31. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  32. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  33. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  34. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  35. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 35 iterations, +0.65 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 1 attribute: TO;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 3 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  36. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  37. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  38. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  39. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  40. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  41. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  42. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  43. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 43 iterations, +0.78 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 1 attribute: Y/A;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 2 attributes left.
+\end{verbatim}
+
+\begin{verbatim}
+##  44. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  45. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  46. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+## After 46 iterations, +0.82 secs:
+\end{verbatim}
+
+\begin{verbatim}
+##  rejected 1 attribute: TO%;
+\end{verbatim}
+
+\begin{verbatim}
+##  still have 1 attribute left.
+\end{verbatim}
+
+\begin{verbatim}
+##  47. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  48. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  49. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  50. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  51. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  52. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  53. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  54. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  55. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  56. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  57. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  58. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  59. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  60. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  61. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  62. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  63. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  64. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  65. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  66. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  67. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  68. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  69. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  70. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  71. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  72. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  73. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  74. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  75. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  76. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  77. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  78. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  79. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  80. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  81. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  82. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  83. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  84. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  85. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  86. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  87. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  88. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  89. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  90. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  91. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  92. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  93. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  94. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  95. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  96. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  97. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  98. run of importance source...
+\end{verbatim}
+
+\begin{verbatim}
+##  99. run of importance source...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(boruta\_result)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Boruta performed 99 iterations in 1.681434 secs.
+##  12 attributes confirmed important: 1stD...10, 1stD...22, Att...18,
+## EXP, NY/A and 7 more;
+##  14 attributes confirmed unimportant: 1stD...17, 1stPy, Att...12, Cmp,
+## FL and 9 more;
+##  1 tentative attributes left: Yds...13;
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(boruta\_result)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{InicioNFL1_files/figure-latex/unnamed-chunk-26-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{confirmedB1 }\OtherTok{\textless{}{-}} \FunctionTok{getSelectedAttributes}\NormalTok{(boruta\_result, }\AttributeTok{withTentative =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(confirmedB1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Rk"        "Yds...5"   "Y/P"       "1stD...10" "TD...14"   "NY/A"     
+##  [7] "Att...18"  "Yds...19"  "TD...20"   "1stD...22" "Sc%"       "EXP"
+\end{verbatim}
+
+\end{document}
